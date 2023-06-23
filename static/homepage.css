@@ -1,0 +1,42 @@
+.navbar .form-inline {
+    display: flex;
+    justify-content: flex-end;
+}
+body {
+    font-family: 'Times New Roman', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f1f1f1;
+    background-image: url('https://trainingindustry.com/content/uploads/2023/06/6.5.23-improve-performance-.jpg');
+    background-size: cover;
+}
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 90px;
+}
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color:green;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+.button:hover {
+    background-color:#f1f1f1;
+}
+.button-text {
+    margin: 0;
+}

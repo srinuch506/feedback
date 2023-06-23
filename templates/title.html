@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Information System</title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='title.css')}}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {% block addcss %} {% endblock %}
+    <style>
+        .navbar .form-inline {
+            display: flex;
+            justify-content: flex-end;
+        }
+    </style>
+</head>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <center><b>{{ message }}</b></center>
+    {% endfor %}
+  {% endif %}
+{% endwith %} 
+<body> 
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="notesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Features
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="notesDropdown">
+                        <a class="dropdown-item" href="#">Custom feedback form generation </a>
+                        <a class="dropdown-item" href="#">Report generation on feedback form data</a>
+                        <a class="dropdown-item" href="#">Downloadable File for Form Data</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="filesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Contact
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="filesDropdown">
+                         <a class="dropdown-item" href="#">Mail: srinivasaraoch506@gmail.com</a>
+                        <a class="dropdown-item" href="#">Mail: thavanamrohitha972@gmail.com</a>
+                        <a class="dropdown-item" href="#">Mail: chowdarynaveen546@gmail.com</a>
+                    </div>
+                </li>
+            </ul>
+            <form class="form-inline">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <div style="text-align:right;">
+        </left><a href="{{url_for('registration')}}"><button class="btnstyle">Register</button></a>
+        <a href="{{url_for('login')}}"><button class="btnstyle">Login</button></a>
+    </div>
+    <div class="student">
+        <center><font size='+10' >Welcome To </center>
+        <center>Feedback Information System</font></center>
+    </div>
+    {% block content %} {% endblock %}
+</body>
+</html>
+ 

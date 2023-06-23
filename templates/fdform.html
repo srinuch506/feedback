@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Feedback Form</title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='fdform.css')}}">
+    {% block addcss %} {% endblock %}
+</head>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <center><b>{{ message }}</b></center>
+    {% endfor %}
+  {% endif %}
+{% endwith %} 
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Feedback on Subjects </h1>
+        </div>
+        <form action="/submit-feedback" method="post">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="Name" required>
+            </div>
+            <div class="form-group">
+                <label for="subject">Roll Number:</label>
+                <input type="text" id="subject" name="Roll Number" required>
+            </div>
+            <div class="form-group">
+                <label for="name">Email:</label>
+                <input type="text" id="name" name="Email" required>
+            </div>
+            <div class="form-group">
+                <label for="subject1">Python:</label>
+                <select id="subject1" name="Python" required>
+                    <option value="" disabled selected>Select a Performance</option>
+                    <option value="Excelent">Excelent</option>
+                    <option value="Good">Good</option>
+                    <option value="Average">Average</option>
+                    <option value="Poor">Poor</option>
+                 </select>
+            </div>
+            <div class="form-group">
+                <label for="subject1">Operating Systems:</label>
+                <select id="subject1" name="Operating Systems" required>
+                    <option value="" disabled selected>Select a Performance</option>
+                    <option value="Excelent">Excelent</option>
+                    <option value="Good">Good</option>
+                    <option value="Average">Average</option>
+                    <option value="Poor">Poor</option>
+                 </select>
+            </div>
+            <div class="form-group">
+                <label for="subject1">Data structures:</label>
+                <select id="subject1" name="Data structures" required>
+                    <option value="" disabled selected>Select a Performance</option>
+                    <option value="Excelent">Excelent</option>
+                    <option value="Good">Good</option>
+                    <option value="Average">Average</option>
+                    <option value="Poor">Poor</option>
+                 </select>
+            </div>
+            <div class="form-group">
+                <label for="subject1">Mysql:</label>
+                <select id="subject1" name="Mysql" required>
+                    <option value="" disabled selected>Select a Performance</option>
+                    <option value="Excelent">Excelent</option>
+                    <option value="Good">Good</option>
+                    <option value="Average">Average</option>
+                    <option value="Poor">Poor</option>
+                 </select>
+            </div>
+            <div class="form-group">
+                <label for="subject1">Flask Frame Work:</label>
+                <select id="subject1" name="Flask Frame Work" required>
+                    <option value="" disabled selected>Select a Performance</option>
+                    <option value="Excelent">Excelent</option>
+                    <option value="Good">Good</option>
+                    <option value="Average">Average</option>
+                    <option value="Poor">Poor</option>
+                 </select>
+            </div>
+
+            <div class="form-group">
+                <label for="feedback">Feedback:</label>
+                <textarea id="feedback" name="Feedback"></textarea>
+            </div>
+            <div class="form-group"> 
+                <a href="{{url_for('submit')}}" class="button">
+                    <h3 class="button-text">Submit-Feedback</h3>
+                </a> 
+            </div> 
+        </form>
+    </div>
+    {% block content %} {% endblock %}
+</body>
+</html>

@@ -1,0 +1,22 @@
+<html>
+<body></body>
+    <link rel="stylesheet" href="{{url_for('static',filename='table.css')}}">
+    <table>
+        <thead>
+            <tr>
+                <th>Survey Id</th>
+                <th>Survey link</th>  
+                <th>Date</th>      
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in data %}
+            <tr> 
+                <td>{{i[1]}}</td>
+                <td><a href="#">download</a></td>
+             </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>    
