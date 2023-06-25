@@ -4,11 +4,12 @@ from flask_session import Session
 from key import secret_key,salt1,salt2,salt3
 from s_token import token
 from cmail import sendmail
+import random,string
 import flask_excel as excel
-from itsdangerous import URLSafeTimedSerializer
+from itsdangerous import Serializer, URLSafeTimedSerializer
 import mysql.connector
 app=Flask(__name__)
-app.secret_key=secret_key
+app.secret_key=secret_key 
 app.config['SESSION_TYPE']='filesystem'
 Session(app)
 excel.init_excel(app)
@@ -198,70 +199,83 @@ def logout():
     else:
         return redirect(url_for('login'))        
 
-'''@app.route('/fdform',methods=['GET','POST'])
-def fdform():
-    if session.get('user'):
-        return render_template('fdform.html') 
-    else:
-        return redirect(url_for('login'))'''  
-@app.route('/submit')
-def submit():
-    if session.get('user'):
-        return 'Feedback Form Submitted Successfully'  
-    else:
-        return redirect(url_for('login'))  
+@app.route('/preview')
+def preview():
+    return render_template('fdform.html')
  
-import random,string
+
 def rand_pass(size):
-	generate_pass = ''.join([random.choice( string.ascii_uppercase +
+	passcode= ''.join([random.choice( string.ascii_uppercase +
 											string.ascii_lowercase +
 											string.digits)
 											for n in range(size)])
 							
-	return generate_pass
- 
-@app.route('/create',methods=['GET','POST'])
-def create():
+	return passcode
+
+@app.route('/fdcreate',methods=['GET','POST'])
+def fdcreate():
     if session.get('user'):
         if request.method=='POST':
+            time=int(request.form['time'])
             sid=rand_pass(10)
-            sur_link=url_for('fdlink',token=(sid,salt3),_external=True)
+            sid_link=url_for('fdurl',token=token(sid,salt3),_external=True)
             cursor=mydb.cursor(buffered=True)
-            cursor.execute('insert into survey (sid,sur_link) values(%s,%s)',[sid,sur_link])
+            cursor.execute('insert into survey(sid,sid_link,added_by) values(%s,%s,%s)',[sid,sid_link,session.get('user')])
             mydb.commit()
             cursor.close()
             return redirect(url_for('home'))
-        return render_template('fdform.html')
+        return render_template('fdlink.html')
     else:
-        return redirect(url_for('login')) 
+        return redirect(url_for('login'))
     
-@app.route('/fdlink/<token>')
-def fdlink(token):
-    sid=request.form['sid']
+@app.route('/fdurl/<token>',methods=['GET','POST'])
+def fdurl(token):
     try:
-        serializer=URLSafeTimedSerializer(sid,salt3)
-        link=serializer.loads(token,salt=salt3,max_age=180)
+        s=Serializer(app.config['secret_key'])
+        survey_dict=s.loads(token)
+        sid=survey_dict['sid']
+        if request.method=='POST':
+            name=request.form['name']
+            roll=request.form['roll']
+            email=request.form['email']
+            python=request.form['python']
+            os=request.form['os']
+            ds=request.form['ds']
+            mysql=request.form['mysql']
+            flask=request.form['flask']
+            feedback=request.form['feedback']
+            submit=request.form['submit']
+            cursor=mydb.cursor(buffered=True)
+            cursor.execute('insert into sur_data values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',[sid,name,roll,email,python,os,ds,mysql,flask,feedback,submit]) 
+            mydb.commit()
+            cursor.close()
+            return 'Feedback submitted successfully'
+        return render_template('fdform.html')
     except Exception as e:
         print(e)
-        abort(404,'Link expired')
-    else:    
-        flash('the feedback form send to your mail')  
-        print(link) 
-        return render_template('fdform.html')
-@app.route('/report',methods=['GET','POST'])
-def report():
-    if session.get('user'):   
-        return render_template('fdtable.html')
+        abort(410,description='Feedback link expired')
+@app.route('/feedbackform/<token>')
+def feedbackform(token):
+    return 'success'
+
+@app.route('/allfdforms')
+def allfdforms():
+    if session.get('user'):
+        cursor=mydb.cursor(buffered=True)
+        cursor.execute('SELECT * FROM survey where added_by=%s',[session.get('user')])
+        data=cursor.fetchall()
+        return render_template('allfdforms.html',fdforms=data)
     else:
-        return redirect(url_for('login'))  
-'''@app.route('/download/<sid>')
-def download():
+        return redirect(url_for('login'))
+@app.route('/download/<sid>')
+def download(sid):
     cursor=mydb.cursor(buffered=True)
     lst=['Name','Roll Number','Email','Python','Operating System','Data structures','Mysql','Flask Frame Work','Feedback']
-    cursor.execute('select *from sur_data where sid=%s',[sid])
+    cursor.execute('SELECT * from sur_data where sid=%s',[sid])
     user_data=[list(i)[1:] for i in cursor.fetchall()]
+    user_data.insert(0,lst)
     print(user_data)
-    return excel.make_response_from_array(user_data,'xlsx',file_name='student_data')'''
+    return excel.make_response_from_array(user_data, "csv",file_name="fddata_data")
 app.run(debug=True,use_reloader=True)
 
             

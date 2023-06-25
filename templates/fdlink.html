@@ -1,11 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>fd form link</title>
+    <title>Feedback Form Link</title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='fdform.css')}}">
+    {% block addcss %} {% endblock %}
 </head>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <center><b>{{ message }}</b></center>
+    {% endfor %}
+  {% endif %}
+{% endwith %} 
 <body>
-<h2>copy the URL of Feedback form</h2>   
+  <div class="container">
+    <div class="header">
+      <h1>Feedback form Auto expiration</h1>
+    </div>
+    <center>
+      <form action="/submit" method="post">
+        <div class="form-group">
+          <label for="name"><h2>Feedback form life time</h2></label>
+          <input type="number" id="number" name="time" required>
+        </div>
+      </form>    
+      <a href="{{url_for('preview')}}" class="button">preview form</a>
+      <a href="#" class="button">Submit</a>
+    </center>
+  </div> 
 </body>
-</html>
+</html> 

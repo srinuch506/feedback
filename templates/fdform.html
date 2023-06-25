@@ -13,26 +13,26 @@
   {% endif %}
 {% endwith %} 
 <body>
+<form method="POST">
     <div class="container">
         <div class="header">
             <h1>Feedback on Subjects </h1>
         </div>
-        <form action="/submit-feedback" method="post">
             <div class="form-group">
                 <label for="name">Name:</label>
-                <input type="text" id="name" name="Name" required>
+                <input type="text" id="name" name="name" required>
             </div>
             <div class="form-group">
                 <label for="subject">Roll Number:</label>
-                <input type="text" id="subject" name="Roll Number" required>
+                <input type="text" id="subject" name="roll" required>
             </div>
             <div class="form-group">
                 <label for="name">Email:</label>
-                <input type="text" id="name" name="Email" required>
+                <input type="text" id="name" name="email" required>
             </div>
             <div class="form-group">
                 <label for="subject1">Python:</label>
-                <select id="subject1" name="Python" required>
+                <select id="subject1" name="python" required>
                     <option value="" disabled selected>Select a Performance</option>
                     <option value="Excelent">Excelent</option>
                     <option value="Good">Good</option>
@@ -42,7 +42,7 @@
             </div>
             <div class="form-group">
                 <label for="subject1">Operating Systems:</label>
-                <select id="subject1" name="Operating Systems" required>
+                <select id="subject1" name="os" required>
                     <option value="" disabled selected>Select a Performance</option>
                     <option value="Excelent">Excelent</option>
                     <option value="Good">Good</option>
@@ -52,7 +52,7 @@
             </div>
             <div class="form-group">
                 <label for="subject1">Data structures:</label>
-                <select id="subject1" name="Data structures" required>
+                <select id="subject1" name="ds" required>
                     <option value="" disabled selected>Select a Performance</option>
                     <option value="Excelent">Excelent</option>
                     <option value="Good">Good</option>
@@ -62,7 +62,7 @@
             </div>
             <div class="form-group">
                 <label for="subject1">Mysql:</label>
-                <select id="subject1" name="Mysql" required>
+                <select id="subject1" name="mysql" required>
                     <option value="" disabled selected>Select a Performance</option>
                     <option value="Excelent">Excelent</option>
                     <option value="Good">Good</option>
@@ -72,7 +72,7 @@
             </div>
             <div class="form-group">
                 <label for="subject1">Flask Frame Work:</label>
-                <select id="subject1" name="Flask Frame Work" required>
+                <select id="subject1" name="flask" required>
                     <option value="" disabled selected>Select a Performance</option>
                     <option value="Excelent">Excelent</option>
                     <option value="Good">Good</option>
@@ -83,15 +83,16 @@
 
             <div class="form-group">
                 <label for="feedback">Feedback:</label>
-                <textarea id="feedback" name="Feedback"></textarea>
+                <textarea id="feedback" name="feedback"></textarea>
             </div>
             <div class="form-group"> 
-                <a href="{{url_for('submit')}}" class="button">
-                    <h3 class="button-text">Submit-Feedback</h3>
+                <a href="#" class="button" name="submit">
+                    <h3 class="button-text" >Submit-Feedback</h3>
                 </a> 
             </div> 
         </form>
     </div>
     {% block content %} {% endblock %}
+</form>
 </body>
 </html>

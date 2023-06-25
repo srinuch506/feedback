@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    body{
+          background-color:rgb(198, 198, 245) ;  
+        }
+    </style>
+    <script>
+        function myFunction(id1) {
+  // Get the text field
+  var copyText = document.getElementById(id1);
+
+  // Select the text field
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); // For mobile devices
+
+   // Copy the text inside the text field
+  navigator.clipboard.writeText(copyText.value);
+
+  // Alert the copied text
+  alert("Url copied to clipboard");
+}
+    </script>
+<body>
+    <table border="1px" style="width: 97%; text-align: center; font-size: 20px;" >
+        <tr>
+            <th>Survey ID</th>
+            <th>Url</th>
+            <th>Timestamp</th>
+        </tr>
+        {% for i in surveys %}
+        <tr>
+            <td>{{i[0]}}</td>
+            <td><input type="text" value="{{i[1]}}" id="{{i[0]}}" hidden>
+                <button onclick="myFunction('{{i[0]}}')">Copy Url</button></td>
+                <td>{{i[3]}}</td>
+                <td><a href="{{url_for('download',sid=i[0])}}">Get survey data</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html> 

@@ -1,22 +1,61 @@
+
+<!DOCTYPE html>
 <html>
-<body></body>
-    <link rel="stylesheet" href="{{url_for('static',filename='table.css')}}">
-    <table>
-        <thead>
-            <tr>
-                <th>Survey Id</th>
-                <th>Survey link</th>  
-                <th>Date</th>      
-            </tr>
-        </thead>
-        <tbody>
-            {% for i in data %}
-            <tr> 
-                <td>{{i[1]}}</td>
-                <td><a href="#">download</a></td>
-             </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<head>
+<style>
+header{
+    text-align:center;
+    color:black;
+    font-family: poppins;
+    background-color:transparent;
+    height: 55px;
+    margin-top: 20px;
+    padding: 40px;
+    font-weight: bolder;
+    font-size:40px ;
+
+}    
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+body{
+    background-image: url("https://t4.ftcdn.net/jpg/03/03/52/05/360_F_303520596_RPlRH6ZXN0vrUwhiAuerT4puFjqOlFq3.jpg");
+    font-size:20px ;
+
+   background-size: cover;
+}
+</style>
+</head>
+<body>
+
+<header>ALL FEEDBACK FORMS</header>
+
+<table>
+ <thead> 
+     <tr>
+             <th>SURVEY ID</th>
+              <th>URL</th>
+              <th>GET SURVEY DATA</th>
+              <th>TIME STAMP</th>
+      </tr>
+  </thead>
+  {% for i in data %}
+  <tbody>
+
+    <!-- {{i}} -->
+    <tr>
+          <td>{{i[0]}}</td>
+          <td>{{i[1]}}</td>
+          <td>{{i[2]}}</td>
+          <td>{{i[3]}}</td>
+    </tr>
+  </tbody>
+  {% endfor %}
+</table>    
+
 </body>
-</html>    
+</html>
+
+
