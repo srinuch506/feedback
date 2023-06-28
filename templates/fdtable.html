@@ -28,6 +28,13 @@ body{
 }
 </style>
 </head>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <center><b>{{ message }}</b></center>
+    {% endfor %}
+  {% endif %}
+{% endwith %} 
 <body>
 
 <header>ALL FEEDBACK FORMS</header>

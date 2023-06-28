@@ -220,7 +220,7 @@ def fdcreate():
             sid=rand_pass(10)
             sid_link=url_for('fdurl',token=token(sid,salt3),_external=True)
             cursor=mydb.cursor(buffered=True)
-            cursor.execute('insert into survey(sid,sid_link,added_by) values(%s,%s,%s)',[sid,sid_link,session.get('user')])
+            cursor.execute('insert into survey (sid,sid_link,added_by) values(%s,%s,%s)',[sid,sid_link,session.get('user')])
             mydb.commit()
             cursor.close()
             return redirect(url_for('home'))
@@ -248,17 +248,16 @@ def fdurl(token):
             cursor=mydb.cursor(buffered=True)
             cursor.execute('insert into sur_data values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',[sid,name,roll,email,python,os,ds,mysql,flask,feedback,submit]) 
             mydb.commit()
-            cursor.close()
             return 'Feedback submitted successfully'
         return render_template('fdform.html')
     except Exception as e:
         print(e)
         abort(410,description='Feedback link expired')
-@app.route('/feedbackform/<token>')
+@app.route('/feedbackform/<token>',methods=['GET','POST'])
 def feedbackform(token):
     return 'success'
 
-@app.route('/allfdforms')
+@app.route('/allfdforms',methods=['GET','POST'])
 def allfdforms():
     if session.get('user'):
         cursor=mydb.cursor(buffered=True)
@@ -267,7 +266,7 @@ def allfdforms():
         return render_template('allfdforms.html',fdforms=data)
     else:
         return redirect(url_for('login'))
-@app.route('/download/<sid>')
+@app.route('/download/<sid>',methods=['GET','POST'])
 def download(sid):
     cursor=mydb.cursor(buffered=True)
     lst=['Name','Roll Number','Email','Python','Operating System','Data structures','Mysql','Flask Frame Work','Feedback']
@@ -275,7 +274,7 @@ def download(sid):
     user_data=[list(i)[1:] for i in cursor.fetchall()]
     user_data.insert(0,lst)
     print(user_data)
-    return excel.make_response_from_array(user_data, "csv",file_name="fddata_data")
+    return excel.make_response_from_array(user_data, "xlsx",file_name="fddata")
 app.run(debug=True,use_reloader=True)
 
             
